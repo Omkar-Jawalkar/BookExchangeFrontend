@@ -1,11 +1,4 @@
-import {
-    Flex,
-    Input,
-    Button,
-    Text,
-    useToast,
-    Spinner,
-} from "@chakra-ui/react";
+import { Flex, Input, Button, Text, useToast, Spinner } from "@chakra-ui/react";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "../../axios/axiosInstance";
@@ -34,8 +27,9 @@ const Login = () => {
                 isClosable: true,
             });
 
-            localStorage.setItem("access_token", data.access_token);
-            localStorage.setItem("refresh_token", data.refresh_token);
+            console.log(data);
+            localStorage.setItem("access_token", data.access);
+            localStorage.setItem("refresh_token", data.refresh);
         },
 
         onError: () => {

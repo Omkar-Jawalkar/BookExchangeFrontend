@@ -18,6 +18,9 @@ const RegisterUser = () => {
     const [email, setEmail] = React.useState("");
     const toast = useToast();
 
+
+    
+
     const registerUser = async (userData) => {
         try {
             const response = await axiosInstance.post("create_user/", userData);
