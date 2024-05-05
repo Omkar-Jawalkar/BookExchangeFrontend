@@ -13,11 +13,16 @@ import {
     ModalCloseButton,
     useDisclosure,
 } from "@chakra-ui/react";
+import { UserStore } from "../../store/UserStore";
+import { useStore } from "@tanstack/react-store";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     const navBgColor = useColorModeValue("gray.200", "gray.700");
     const navTextColor = useColorModeValue("gray.800", "whiteAlpha.900");
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const isLoggedIn = useStore(UserStore, (state) => state.isLoggedIn);
 
     return (
         <>
@@ -54,18 +59,11 @@ const Navbar = () => {
                                 fontWeight={600}
                                 color={navTextColor}
                                 variant={"link"}
-                            >
-                                Contact
-                            </Button>
-                            <Button
-                                fontSize={"sm"}
-                                fontWeight={600}
-                                color={navTextColor}
-                                variant={"link"}
                                 onClick={onOpen}
                             >
                                 Account
                             </Button>
+                            <a href="/book/add">Add a Book</a>
                         </Stack>
                     </Flex>
                 </Flex>
@@ -77,7 +75,15 @@ const Navbar = () => {
                     <ModalHeader>Account</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        {/* Add your account management content here */}
+                        <Button
+                            colorScheme="red"
+                            onClick={() => {
+                                localStorage.clear();
+                                window.location.href = "/login";
+                            }}
+                        >
+                            Logout
+                        </Button>
                         <Text>This is the account modal.</Text>
                     </ModalBody>
                 </ModalContent>

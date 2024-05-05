@@ -1,12 +1,23 @@
 import { Flex, Input, Button, Text, useToast, Spinner } from "@chakra-ui/react";
-import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import axiosInstance from "../../axios/axiosInstance";
+import { useStore } from "@tanstack/react-store";
+import { useNavigate } from "react-router-dom";
+import { UserStore } from "../../store/UserStore";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const isLoggedIn = useStore(UserStore, (state) => state.isLoggedIn);
+    const navigate = useNavigate();
     const toast = useToast();
+
+    useEffect(() => {
+        // access the login state
+    }, []);
 
     const loginUser = async (data) => {
         try {
@@ -26,10 +37,12 @@ const Login = () => {
                 status: "success",
                 isClosable: true,
             });
-
-            console.log(data);
             localStorage.setItem("access_token", data.access);
             localStorage.setItem("refresh_token", data.refresh);
+
+            // const decodedData = jwtDecode(data.refresh);
+
+            navigate("/");
         },
 
         onError: () => {

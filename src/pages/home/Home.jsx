@@ -20,10 +20,11 @@ const SearchBooks = () => {
 
     const getBooks = async (locationData) => {
         try {
-            await axiosInstance.get("get_all_nearby_books/", {
+            const response = await axiosInstance.get("get_all_nearby_books/", {
                 currentLatitude: locationData.latitude,
                 currentLongitude: locationData.Longitude,
             });
+            return response.data;
         } catch (error) {
             throw new Error(error);
         }
@@ -52,18 +53,18 @@ const SearchBooks = () => {
             </InputGroup>
 
             <Grid templateColumns="repeat(3, 1fr)" gap={6}>
-                {books.map((book) => (
+                {data?.data?.map((book) => (
                     <GridItem
                         key={book.id}
                         boxShadow="md"
                         p={6}
                         borderRadius="md"
                     >
-                        <Image src={book.coverImage} alt={book.title} mb={4} />
+                        <Image src={book.cover_image} alt={book.title} mb={4} />
                         <Heading as="h3" size="md" mb={2}>
-                            {book.title}
+                            {book.name}
                         </Heading>
-                        <Text>By {book.author}</Text>
+                        <Text>Category : {book.category}</Text>
                     </GridItem>
                 ))}
             </Grid>
